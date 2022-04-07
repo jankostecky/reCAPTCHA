@@ -31,7 +31,7 @@ final class ReCaptchaExtension extends CompilerExtension
 		$builder = $this->getContainerBuilder();
 
 		$builder->addDefinition($this->prefix('provider'))
-			->setFactory(ReCaptchaProvider::class, [$config['siteKey'], $config['secretKey']]);
+			->setFactory(ReCaptchaProvider::class, [$config['siteKey'], $config['secretKey']. $config['threshold']]);
 	}
 
 	/**
