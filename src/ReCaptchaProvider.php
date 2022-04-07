@@ -30,10 +30,14 @@ class ReCaptchaProvider
 	/** @var string */
 	private $secretKey;
 
-	public function __construct(string $siteKey, string $secretKey)
+	/** @var float */
+	private $threshold;
+
+	public function __construct(string $siteKey, string $secretKey, float $threshold)
 	{
 		$this->siteKey = $siteKey;
 		$this->secretKey = $secretKey;
+		$this->threshold = $threshold;
 	}
 
 	public function getSiteKey(): string
@@ -61,7 +65,7 @@ class ReCaptchaProvider
 		$answer = json_decode($response, true);
 
 		// Return response
-		return $answer['success'] === true ? new ReCaptchaResponse(true) : new ReCaptchaResponse(false, $answer['error-codes'] ?? null);
+		return $answer['success'] === true && $answer['score'] >= $this->threshold ? new ReCaptchaResponse(true) : new ReCaptchaResponse(false, $answer['error-codes'] ?? null);
 	}
 
 	public function validateControl(BaseControl $control): bool

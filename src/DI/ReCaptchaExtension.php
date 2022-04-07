@@ -18,6 +18,7 @@ final class ReCaptchaExtension extends CompilerExtension
 		return Expect::structure([
 			'siteKey' => Expect::string()->required(),
 			'secretKey' => Expect::string()->required(),
+			'threshold' => Expect::float()->required(),
 		]);
 	}
 
